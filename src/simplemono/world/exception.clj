@@ -7,7 +7,8 @@
    See namespace `simplemono.world.WorldException` for more details."
   ([msg world-value]
    (world-exception msg
-                    world-value))
+                    world-value
+                    nil))
   ([msg world-value cause]
    (WorldException.
      msg
