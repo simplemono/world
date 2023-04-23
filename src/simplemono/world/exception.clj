@@ -1,4 +1,5 @@
 (ns simplemono.world.exception
+  (:require [simplemono.world.WorldException])
   (:import simplemono.world.WorldException))
 
 (defn world-exception
