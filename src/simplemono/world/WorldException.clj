@@ -50,6 +50,10 @@
 (defn world-ex-deref [this]
   (:world/value (.state this)))
 
+(when-not (resolve 'simplemono.world.WorldException)
+  ;; compile at runtime, if it was not AOT compiled:
+  (compile 'simplemono.world.WorldException))
+
 (defmethod
   ^{:doc "Takes care that `pr` only prints the `ex-data` and not the world-value."}
   print-method
