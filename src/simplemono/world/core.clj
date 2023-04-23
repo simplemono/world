@@ -1,4 +1,5 @@
 (ns simplemono.world.core
+  (:require [simplemono.world.WorldException])
   (:import simplemono.world.WorldException))
 
 (defn wrap-catch
