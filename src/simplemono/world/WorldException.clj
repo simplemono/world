@@ -52,6 +52,7 @@
 
 (when-not (resolve 'simplemono.world.WorldException)
   ;; compile at runtime, if it was not AOT compiled:
+  (prn "compiling simplemono.world.WorldException")
   (compile 'simplemono.world.WorldException))
 
 (comment
