@@ -54,14 +54,6 @@
   ;; compile at runtime, if it was not AOT compiled:
   (compile 'simplemono.world.WorldException))
 
-(defmethod
-  ^{:doc "Takes care that `pr` only prints the `ex-data` and not the world-value."}
-  print-method
-  simplemono.world.WorldException [ex writer]
-  (#'clojure.core/print-throwable ex
-                                  writer)
-  )
-
 (comment
   (def example-exception
     (simplemono.world.WorldException.
