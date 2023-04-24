@@ -69,13 +69,12 @@
    (causes-seq e)))
 
 (defn extract-and-log!
-  "Extracts all world-values from `e` and its causes. The UUID and the world value
-   is passed as arguments to `log-value!`, which is supposed to quickly store the
-   world-value."
+  "Extracts all world-values from `e` and its causes. The `:world/value-uuid` and
+   the `:world/value` are passed as map to `log-value!`, which is supposed to
+   quickly store the world-value."
   [^Throwable e log-value!]
-  (doseq [{:keys [world/value-uuid world/value]} (extract-world-values e)]
-    (log-value! value-uuid
-                value)))
+  (doseq [data (extract-world-values e)]
+    (log-value! data)))
 
 (comment
   (def example-exception
