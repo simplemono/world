@@ -3,8 +3,8 @@
 
 (defn wrap-log-world-values
   "A middleware for Ring that can be used to extract and log all world-values from
-   a thrown `simplemono.world.WorldException`. It will also pass all nested
-   `WorldException` to `log-value!`, which will receive the UUID as first
+   a thrown `simplemono.world.exception/world-ex-info`. It will also pass all nested
+   `world-ex-info` to `log-value!`, which will receive the UUID as first
    argument and the world-value as second argument."
   [ring-handler log-value!]
   (fn

@@ -1,20 +1,19 @@
 (ns simplemono.world.core
-  (:require [simplemono.world.WorldException])
-  (:import simplemono.world.WorldException))
+  (:require [simplemono.world.exception :as exception]))
 
 (defn wrap-catch
   "Default middleware that wraps a `step` function with a try-catch, which wraps
-   catched throwables into a `simplemono.world.WorldException`."
+   catched throwables into a `world-ex-info`."
   [step]
   (fn [w]
     (try
       (step w)
       (catch Throwable e
-        (throw (WorldException.
-                 (str "error applying step: "
-                      step)
-                 w
-                 e))))))
+        (throw (exception/world-ex-info
+                (str "error applying step: "
+                     step)
+                w
+                e))))))
 
 (defn world-reduce
   "Reduces the sequence of `steps` functions over the world-value `w0`."
@@ -48,12 +47,4 @@
   ([form]
    `(w< ~wrap-catch
         ~form))
-  )
-
-(defmethod
-  ^{:doc "Takes care that `pr` only prints the `ex-data` and not the world-value."}
-  print-method simplemono.world.WorldException
-  [ex writer]
-  (#'clojure.core/print-throwable ex
-                                  writer)
   )
