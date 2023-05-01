@@ -197,3 +197,47 @@ development tool like [portal](https://github.com/djblue/portal) or
 Overall the approach will also consume more memory, but the real challenge is
 how to log such large maps. A solution to this problem is described in the next
 section.
+
+## Logging
+
+Logging larger data is a problem for a lot of logging services. Google Cloud
+Logging for example allows 256 KB per log entry. Each log entry is a JSON map
+with predefined fields that are filled by Google Cloud Logging and the log
+collector. The data provided by your application will end up in the
+`jsonPayload` field. It is tough to calculate, if your larger data plus the
+predefined fields will be slightly above or under the 256 KB. The decision might
+be different for another logging service. Therefore this library only takes care
+that the larger data is not logged by default. This is accomplished with the
+`simplemono.world.exception/world-ex-info` function, which takes the same
+arguments as `clojure.core/ex-info`. But instead of the exception data with the
+large Clojure map this:
+
+``` clojure
+(ex-data (world-ex-info \"message\" {:large \"map\" ...}))
+```
+
+will return something like:
+
+``` clojure
+{:world/value-uuid #uuid \"aaa87af8-a466-45b0-b5fc-32cde6424919\"}
+```
+
+This is small enough to be logged by any logging solution. The (large)
+`world-value` is added as metadata to the `ex-data` of the `ExceptionInfo`.
+
+``` clojure
+(simplemono.world.exception/extract-and-log! exception
+                                             log-value!)
+```
+
+The code above can be used to extract and log the `world-value` entries from the
+exception and its causes. An implementation of `log-value!` could for example
+serialize the `world-value` entries with
+[nippy](https://github.com/ptaoussanis/nippy), write them to a folder, while
+using the `:world/value-uuid` as file name. Another thread could then be
+responsible to upload those files to a Google Cloud Storage bucket.
+
+The `simplemono.world.ring-middleware/wrap-log-world-values` function provides a
+Ring middleware to catch exceptions, invoke `extract-and-log!` on it and rethrow
+it. Another Ring middleware can then log the `world-ex-info` like any other
+exception.
