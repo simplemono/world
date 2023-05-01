@@ -187,9 +187,8 @@ editor cursor behind the corresponding parenthesis before you hit the eval
 shortcut to quickly look at intermediate results.
 
 If the `clj-http.client/request` call in `get-items` fails, then the exception
-will contain data that, for example, include the request map. But
-also, all other data added to the input map so far will be
-included. And `get-items` also shows that `w/w<` can be nested so that the
+will contain data that, for example, include the request map. All other data added to the input map so far will be
+included. And `get-items` shows that `w/w<` can be nested so that the
 exception will also contain the data of the levels above. However, these maps will be
 large, and reading them is inconvenient. Therefore it is recommended to use a
 development tool like [portal](https://github.com/djblue/portal) or
