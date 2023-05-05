@@ -1,6 +1,7 @@
 # World
 
-This library provides tools to work with the world-state approach by David Nolen:
+This library provides tools to work with the world-state approach that has been
+invented by David Nolen:
 
 [<img src="https://i.ytimg.com/vi/qDGTxyIrKJY/hq2.jpg" width="50%">](https://www.youtube.com/watch?v=qDGTxyIrKJY&t=1659s "Keynote: The Power of Toys - David Nolen - Lambda Days 2022")
 
