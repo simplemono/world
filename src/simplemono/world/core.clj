@@ -48,3 +48,11 @@
    `(w< ~wrap-catch
         ~form))
   )
+
+(defn tap
+  "Invokes `clojure.core/tap>` with the world-value `w` and returns it unchanged.
+   Helpful to inspect an intermediate world-value in a `w<` or `world-reduce`
+   call."
+  [w]
+  (tap> w)
+  w)
